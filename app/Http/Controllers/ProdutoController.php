@@ -12,7 +12,7 @@ class ProdutoController extends Controller
     public function index()
     {
 
-        $produtos = Produto::orderby('id', 'desc')->paginate();
+        $produtos = Produto::orderby('id', 'desc')->paginate(2);
 
         return view('produtos.index', ['produtos' => $produtos]);
     }
@@ -48,6 +48,26 @@ class ProdutoController extends Controller
         $produto->quantidade = $request->quantidade;
         $produto->descricao = $request->descricao;
         $produto->save();
+        return redirect()->route('produtos');
+    }
+
+    // metodo para exibir a vista de descricao dos produtos
+
+    public function show($id)
+    {
+        $produto = Produto::find($id);
+        return view('produtos.show', ['produto' => $produto]);
+    }
+
+    public function modal($id)
+    {
+        $produtos = Produto::orderBy('id', 'desc')->paginate();
+        return view('produtos.index', ['produtos' => $produtos, 'id' => $id]);
+    }
+
+    public function delete(produto $produto)
+    {
+        $produto->delete();
         return redirect()->route('produtos');
     }
 }
