@@ -12,7 +12,7 @@ class ProdutoController extends Controller
     public function index()
     {
 
-        $produtos = Produto::orderby('id', 'desc')->paginate(2);
+        $produtos = Produto::orderby('id', 'desc')->paginate();
 
         return view('produtos.index', ['produtos' => $produtos]);
     }
@@ -34,14 +34,14 @@ class ProdutoController extends Controller
     }
 
     // exibir o formulário para edição  de 1 produto específico
-    public function edit(produto $produto)
+    public function edit(Produto $produto)
     {
         return view('produtos.edit', ['produto' => $produto]);
     }
 
     // criar  o método para actualizar o produto
 
-    public function editar(Request $request, produto $produto)
+    public function editar(Request $request, Produto $produto)
     {
         $produto->nome = $request->nome;
         $produto->preco = $request->preco;
@@ -56,6 +56,7 @@ class ProdutoController extends Controller
     public function show($id)
     {
         $produto = Produto::find($id);
+
         return view('produtos.show', ['produto' => $produto]);
     }
 
@@ -65,7 +66,7 @@ class ProdutoController extends Controller
         return view('produtos.index', ['produtos' => $produtos, 'id' => $id]);
     }
 
-    public function delete(produto $produto)
+    public function delete(Produto $produto)
     {
         $produto->delete();
         return redirect()->route('produtos');

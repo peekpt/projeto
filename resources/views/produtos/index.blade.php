@@ -3,6 +3,17 @@
 @section('content')
 
 <?php
+@session_start();
+if(@$_SESSION["cod_util"] == null) {
+    echo "
+    <script>
+     window.location='./';    
+    </script>
+    ";
+}
+?>
+
+<?php
 if(!isset($id)){
      // para que a variavel nao esteja indefinida
     $id="";
@@ -24,9 +35,9 @@ if(!isset($id)){
                 @foreach ($produtos as $produto)
                 <tr>
                     <td>{{$produto->nome}}</td>
-                    <td>{{$produto->preco}}</td>
-                    <td>{{$produto->quantidade}}</td>
-                    <td>
+                    <td style="width:90px;">{{$produto->preco}}</td>
+                    <td style="width:40px;">{{$produto->quantidade}}</td>
+                    <td style="width:120px;">
                         <a href="{{ route('produtos.descricao',$produto->id) }}"><i class="fas fa-eye text-primary me-3"></i></a>
                         <a href="{{ route('produtos.edit',$produto) }}"><i class="fas fa-edit text-info me-3"></i></a>
                         <a href="{{ route('produtos.modal',$produto) }}"><i class="fas fa-trash text-danger me-3"></i></a>
@@ -36,9 +47,20 @@ if(!isset($id)){
                 @endforeach
             </tbody>
         </table>
-        {{ $produtos->links() }}
+        
+        
+        {{-- <div>{{ $produtos->links() }}</div> --}}
+            
     </div>
 </div>
+
+
+<script>
+
+    $(document).ready( function (){
+        $('#dataTable').DataTable();
+    });
+</script>
 @endsection
 
 
