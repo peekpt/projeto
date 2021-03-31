@@ -2,16 +2,7 @@
 @section('title','Criar Utilizador')
 @section('content')
 
-<?php
-@session_start();
-if(@$_SESSION["cod_util"] == null) {
-    echo "
-    <script>
-     window.location='../';    
-    </script>
-    ";
-}
-?>
+
 
 
 <div class="container">
